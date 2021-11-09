@@ -61,3 +61,10 @@ h2 {
 .error {
   color: red;
 }
+
+.condition-high-low {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
