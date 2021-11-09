@@ -57,3 +57,7 @@ hr {
 h2 {
   font-size: 200% !important;
 }
+
+.error {
+  color: red;
+}

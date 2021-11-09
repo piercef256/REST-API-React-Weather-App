@@ -14,9 +14,10 @@ function Homepage() {
     location: "",
     current: "",
   });
-  const [location, setLocation] = useState("SF");
-  const [locationSubmit, setLocationSubmit] = useState("SF");
+  const [location, setLocation] = useState("");
+  const [locationSubmit, setLocationSubmit] = useState("San Francisco");
   const [units, setUnits] = useState("fahrenheit");
+  const [error, setError] = useState("");
   const API_URL = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${locationSubmit}`;
 
   useEffect(() => {
@@ -33,9 +34,9 @@ function Homepage() {
           forecast: json.forecast.forecastday[0].day,
           datetime: json.location.localtime,
         });
-        console.log(json);
-        console.log(json.forecast.forecastday[0].day);
-        console.log(json.current.last_updated);
+      })
+      .catch((error) => {
+        setError("Invalid input");
       });
   }, [API_URL, locationSubmit]);
 
@@ -43,10 +44,12 @@ function Homepage() {
     <div className="homepage container text-center">
       <div className="top-inputs">
         <h1>Weather App</h1>
+        <span className="error">{error}</span>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             setLocationSubmit(location);
+            setError("");
           }}
         >
           <div className="location-input-div">
@@ -54,7 +57,7 @@ function Homepage() {
               type="text"
               className="form-control location-input"
               id="inputCity"
-              placeholder="City"
+              placeholder="Enter city"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
